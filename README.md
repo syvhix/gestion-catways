@@ -1,5 +1,7 @@
 # 🏖️ Gestion Catways - Port de Russell
 
+![GitHub Actions](https://github.com/votre-username/gestion-catways/actions/workflows/deploy.yml/badge.svg)
+![Render](https://gestion-catways.onrender.com/)
 ![Node.js](https://img.shields.io/badge/Node.js-18.x-green)
 ![Express.js](https://img.shields.io/badge/Express.js-4.x-lightgrey)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
