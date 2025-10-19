@@ -7,6 +7,9 @@ require('dotenv').config();
 
 const connectDB = require('./config/database');
 
+// Connexion à la base de données
+connectDB();
+
 const app = express();
 
 // Middleware
@@ -14,15 +17,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Servir le frontend en production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/public')));
-  
-  // Pour toutes les routes non-API, servir index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
-  });
-}
+// ✅ CORRECTION : Servir les fichiers statiques AVANT les routes
+app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 // Configuration Swagger
 const swaggerOptions = {
@@ -35,8 +31,10 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${process.env.PORT || 3000}`,
-        description: 'Serveur de développement'
+        url: process.env.NODE_ENV === 'production' 
+          ? `https://${process.env.RENDER_EXTERNAL_URL || 'votre-app.render.com'}` 
+          : `http://localhost:${process.env.PORT || 3000}`,
+        description: process.env.NODE_ENV === 'production' ? 'Serveur de production' : 'Serveur de développement'
       }
     ],
     components: {
@@ -63,12 +61,42 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/catways', require('./routes/catwayRoutes'));
 app.use('/api/reservations', require('./routes/reservationRoutes'));
 
-// Route pour la page d'accueil
+// ✅ CORRECTION : Route pour la page d'accueil
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
 });
 
-// Health check route pour les tests
+// ✅ CORRECTION : Routes pour toutes les pages HTML
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/index.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/dashboard.html'));
+});
+
+app.get('/catways', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/catways.html'));
+});
+
+app.get('/reservations', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/reservations.html'));
+});
+
+app.get('/documentation', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/documentation.html'));
+});
+
+// ✅ CORRECTION : Routes pour les détails avec paramètres
+app.get('/catway-details', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/catway-details.html'));
+});
+
+app.get('/reservation-details', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/public/reservation-details.html'));
+});
+
+// Health check route
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
@@ -99,8 +127,9 @@ if (require.main === module) {
     app.listen(PORT, () => {
       console.log(`🚀 Serveur démarré sur le port ${PORT}`);
       console.log(`📚 Documentation API: http://localhost:${PORT}/api-docs`);
+      console.log(`🌐 Frontend: http://localhost:${PORT}`);
     });
   });
 }
 
-module.exports = app; 
+module.exports = app;

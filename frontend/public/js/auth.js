@@ -63,5 +63,5 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
 // Vérification si déjà connecté
 if (localStorage.getItem('authToken') && window.location.pathname === '/index.html') {
-    window.location.href = '/dashboard.html';
+    window.location.href = '/dashboard';
 }

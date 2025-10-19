@@ -65,5 +65,5 @@ document.getElementById('createCatwayForm').addEventListener('submit', async (e)
 
 // Vérification authentification sur les pages protégées
 if (!localStorage.getItem('authToken') && !window.location.pathname.includes('index.html')) {
-    window.location.href = '/index.html';
+    window.location.href = '/index';
 }

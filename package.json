@@ -10,7 +10,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "import-data": "node backend/scripts/importData.js",
-    "build": "npm install"
+    "build": "npm install && echo 'Build completed'"
     
   },
   "dependencies": {
