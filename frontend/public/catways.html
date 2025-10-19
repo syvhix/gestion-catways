@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Catways - Port de Russell</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <a href="/dashboard.html" class="logo">🏖️ Port de Russell</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard.html">Tableau de bord</a></li>
+                <li><a href="/catways.html" class="active">Catways</a></li>
+                <li><a href="/reservations.html">Réservations</a></li>
+                <li><a href="/documentation.html">Documentation</a></li>
+                <li><button onclick="logout()" class="btn btn-danger btn-sm">Déconnexion</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h1 class="card-title">⚓ Liste des Catways</h1>
+                    <button onclick="showModal('createCatwayModal')" class="btn btn-success">
+                        ➕ Nouveau Catway
+                    </button>
+                </div>
+
+                <div class="filters mb-3">
+                    <input type="text" id="searchCatways" class="form-control" placeholder="Rechercher un catway...">
+                    <select id="filterType" class="form-control mt-1">
+                        <option value="">Tous les types</option>
+                        <option value="long">Long</option>
+                        <option value="short">Court</option>
+                    </select>
+                    <select id="filterAvailability" class="form-control mt-1">
+                        <option value="">Tous</option>
+                        <option value="available">Disponibles</option>
+                        <option value="occupied">Occupés</option>
+                    </select>
+                </div>
+
+                <div id="loadingMessage" class="text-center">
+                    <p>Chargement des catways...</p>
+                </div>
+
+                <div id="catwaysList" class="hidden">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Numéro</th>
+                                <th>Type</th>
+                                <th>État</th>
+                                <th>Disponibilité</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catwaysTableBody">
+                            <!-- Rempli dynamiquement par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="noCatwaysMessage" class="hidden text-center">
+                    <p>Aucun catway trouvé.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal création catway -->
+    <div id="createCatwayModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Créer un nouveau catway</h3>
+                <span class="close" onclick="closeModal('createCatwayModal')">&times;</span>
+            </div>
+            <form id="modalCreateCatwayForm">
+                <div class="form-group">
+                    <label class="form-label">Numéro du catway</label>
+                    <input type="number" class="form-control" id="modalCatwayNumber" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-control" id="modalCatwayType" required>
+                        <option value="">Sélectionnez un type</option>
+                        <option value="long">Long</option>
+                        <option value="short">Court</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">État du catway</label>
+                    <textarea class="form-control" id="modalCatwayState" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('createCatwayModal')">Annuler</button>
+                    <button type="submit" class="btn btn-success">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/catways.js"></script>
+</body>
+</html>

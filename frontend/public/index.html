@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port de Russell - Gestion des Catways</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-title">
+                <h1>🏖️ Port de Russell</h1>
+                <p>Gestion des réservations de catways</p>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Se connecter
+                </button>
+            </form>
+
+            <div id="message" class="mt-2"></div>
+
+            <div class="auth-links">
+                <p>Première visite ? <a href="#" onclick="showRegister()">Créer un compte</a></p>
+                <p><a href="/documentation.html">📚 Documentation de l'API</a></p>
+            </div>
+
+            <!-- Formulaire d'inscription caché -->
+            <form id="registerForm" class="auth-form hidden">
+                <div class="form-group">
+                    <label for="regName" class="form-label">Nom complet</label>
+                    <input type="text" id="regName" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail" class="form-label">Email</label>
+                    <input type="email" id="regEmail" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword" class="form-label">Mot de passe</label>
+                    <input type="password" id="regPassword" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-success" style="width: 100%;">
+                    Créer le compte
+                </button>
+
+                <div class="text-center mt-2">
+                    <a href="#" onclick="showLogin()">← Retour à la connexion</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

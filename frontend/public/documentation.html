@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation API - Port de Russell</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .endpoint {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        .get { background: #10b981; }
+        .post { background: #3b82f6; }
+        .put { background: #f59e0b; }
+        .patch { background: #8b5cf6; }
+        .delete { background: #ef4444; }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: var(--radius);
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <a href="/dashboard.html" class="logo">🏖️ Port de Russell</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard.html">Tableau de bord</a></li>
+                <li><a href="/catways.html">Catways</a></li>
+                <li><a href="/reservations.html">Réservations</a></li>
+                <li><a href="/documentation.html" class="active">Documentation</a></li>
+                <li>
+                    <% if (user) { %>
+                        <button onclick="logout()" class="btn btn-danger btn-sm">Déconnexion</button>
+                    <% } else { %>
+                        <a href="/index.html" class="btn btn-primary btn-sm">Connexion</a>
+                    <% } %>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">📚 Documentation de l'API</h1>
+                    <p>Documentation complète des endpoints REST de l'API de gestion des catways</p>
+                </div>
+
+                <div class="documentation-content">
+                    <h2>🔑 Authentification</h2>
+                    
+                    <div class="endpoint">
+                        <div class="method post">POST</div>
+                        <strong>/api/auth/register</strong> - Créer un compte utilisateur
+                        <div class="code-block">
+// Request
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "motdepasse123"
+}
+
+// Response
+{
+  "success": true,
+  "data": {
+    "_id": "507f1f77bcf86cd799439011",
+    "name": "John Doe",
+    "email": "john@example.com",
+    "token": "jwt_token_here"
+  }
+}
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method post">POST</div>
+                        <strong>/api/auth/login</strong> - Connexion utilisateur
+                    </div>
+
+                    <h2>⚓ Catways</h2>
+
+                    <div class="endpoint">
+                        <div class="method get">GET</div>
+                        <strong>/api/catways</strong> - Lister tous les catways
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method get">GET</div>
+                        <strong>/api/catways/:id</strong> - Détails d'un catway
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method post">POST</div>
+                        <strong>/api/catways</strong> - Créer un catway
+                        <div class="code-block">
+// Request
+{
+  "catwayNumber": 1,
+  "type": "long",
+  "catwayState": "Bon état"
+}
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method put">PUT</div>
+                        <strong>/api/catways/:id</strong> - Modifier un catway
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method patch">PATCH</div>
+                        <strong>/api/catways/:id</strong> - Modifier l'état d'un catway
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method delete">DELETE</div>
+                        <strong>/api/catways/:id</strong> - Supprimer un catway
+                    </div>
+
+                    <h2>📅 Réservations</h2>
+
+                    <div class="endpoint">
+                        <div class="method get">GET</div>
+                        <strong>/api/catways/:id/reservations</strong> - Réservations d'un catway
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method post">POST</div>
+                        <strong>/api/catways/:id/reservations</strong> - Créer une réservation
+                        <div class="code-block">
+// Request
+{
+  "clientName": "Jean Dupont",
+  "boatName": "Sea Breeze",
+  "checkIn": "2024-06-01T00:00:00.000Z",
+  "checkOut": "2024-06-10T00:00:00.000Z"
+}
+                        </div>
+                    </div>
+
+                    <div class="endpoint">
+                        <div class="method delete">DELETE</div>
+                        <strong>/api/catways/:id/reservations/:reservationId</strong> - Supprimer une réservation
+                    </div>
+
+                    <h2>🔐 Sécurité</h2>
+                    <p>Toutes les routes (sauf l'authentification) nécessitent un token JWT dans le header :</p>
+                    <div class="code-block">
+Authorization: Bearer VOTRE_JWT_TOKEN_ICI
+                    </div>
+
+                    <h2>🔄 Codes de statut HTTP</h2>
+                    <ul>
+                        <li><strong>200</strong> - Succès</li>
+                        <li><strong>201</strong> - Créé avec succès</li>
+                        <li><strong>400</strong> - Requête invalide</li>
+                        <li><strong>401</strong> - Non autorisé</li>
+                        <li><strong>404</strong> - Ressource non trouvée</li>
+                        <li><strong>500</strong> - Erreur serveur</li>
+                    </ul>
+
+                    <div class="text-center mt-3">
+                        <a href="/api-docs" class="btn btn-primary" target="_blank">
+                            📖 Documentation Swagger Interactive
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            window.location.href = '/index.html';
+        }
+    </script>
+</body>
+</html>

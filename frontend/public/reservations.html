@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservations - Port de Russell</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <a href="/dashboard.html" class="logo">🏖️ Port de Russell</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard.html">Tableau de bord</a></li>
+                <li><a href="/catways.html">Catways</a></li>
+                <li><a href="/reservations.html" class="active">Réservations</a></li>
+                <li><a href="/documentation.html">Documentation</a></li>
+                <li><button onclick="logout()" class="btn btn-danger btn-sm">Déconnexion</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h1 class="card-title">📅 Liste des Réservations</h1>
+                    <button onclick="showModal('createReservationModal')" class="btn btn-success">
+                        ➕ Nouvelle Réservation
+                    </button>
+                </div>
+
+                <div class="filters mb-3">
+                    <input type="text" id="searchReservations" class="form-control" placeholder="Rechercher une réservation...">
+                    <select id="filterStatus" class="form-control mt-1">
+                        <option value="">Tous les statuts</option>
+                        <option value="active">Actives</option>
+                        <option value="completed">Terminées</option>
+                        <option value="cancelled">Annulées</option>
+                    </select>
+                    <input type="date" id="filterDate" class="form-control mt-1" placeholder="Filtrer par date">
+                </div>
+
+                <div id="loadingMessage" class="text-center">
+                    <p>Chargement des réservations...</p>
+                </div>
+
+                <div id="reservationsList" class="hidden">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Catway</th>
+                                <th>Client</th>
+                                <th>Bateau</th>
+                                <th>Arrivée</th>
+                                <th>Départ</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTableBody">
+                            <!-- Rempli dynamiquement par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="noReservationsMessage" class="hidden text-center">
+                    <p>Aucune réservation trouvée.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal création réservation -->
+    <div id="createReservationModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Créer une nouvelle réservation</h3>
+                <span class="close" onclick="closeModal('createReservationModal')">&times;</span>
+            </div>
+            <form id="modalCreateReservationForm">
+                <div class="form-group">
+                    <label class="form-label">Catway</label>
+                    <select class="form-control" id="modalReservationCatway" required>
+                        <option value="">Sélectionnez un catway</option>
+                        <!-- Rempli dynamiquement -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nom du client</label>
+                    <input type="text" class="form-control" id="modalClientName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Nom du bateau</label>
+                    <input type="text" class="form-control" id="modalBoatName" required>
+                </div>
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Date d'arrivée</label>
+                        <input type="date" class="form-control" id="modalCheckIn" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date de départ</label>
+                        <input type="date" class="form-control" id="modalCheckOut" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('createReservationModal')">Annuler</button>
+                    <button type="submit" class="btn btn-success">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/reservations.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - Port de Russell</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar container">
+            <a href="/dashboard.html" class="logo">🏖️ Port de Russell</a>
+            <ul class="nav-links">
+                <li><a href="/dashboard.html">Tableau de bord</a></li>
+                <li><a href="/catways.html">Catways</a></li>
+                <li><a href="/reservations.html">Réservations</a></li>
+                <li><a href="/documentation.html">Documentation</a></li>
+                <li><button onclick="logout()" class="btn btn-danger btn-sm">Déconnexion</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Tableau de bord</h1>
+            <p>Bienvenue, <span id="userName"></span> !</p>
+
+            <div class="grid grid-3">
+                <!-- Statistiques -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">📊 Statistiques</h3>
+                    </div>
+                    <div id="statsContent">
+                        <p>Chargement des statistiques...</p>
+                    </div>
+                </div>
+
+                <!-- Actions rapides -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">⚡ Actions rapides</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <button onclick="showModal('createCatwayModal')" class="btn btn-primary mb-1">
+                            ➕ Nouveau catway
+                        </button>
+                        <button onclick="showModal('createReservationModal')" class="btn btn-success mb-1">
+                            📅 Nouvelle réservation
+                        </button>
+                        <button onclick="showModal('createUserModal')" class="btn btn-secondary">
+                            👥 Nouvel utilisateur
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dernières activités -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">📝 Dernières activités</h3>
+                    </div>
+                    <div id="recentActivities">
+                        <p>Chargement des activités...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section gestion utilisateurs -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">👥 Gestion des utilisateurs</h3>
+                </div>
+                <div class="grid grid-2">
+                    <form id="createUserForm">
+                        <h4>Créer un utilisateur</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Nom complet" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Mot de passe" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Créer</button>
+                    </form>
+
+                    <div>
+                        <h4>Gestion des utilisateurs</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ID utilisateur">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary">Modifier</button>
+                            <button class="btn btn-danger">Supprimer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section gestion catways -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">⚓ Gestion des catways</h3>
+                </div>
+                <div class="grid grid-3">
+                    <!-- Formulaire création catway -->
+                    <form id="createCatwayForm">
+                        <h4>Créer un catway</h4>
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Numéro" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" required>
+                                <option value="">Type</option>
+                                <option value="long">Long</option>
+                                <option value="short">Court</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="État du catway" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Créer</button>
+                    </form>
+
+                    <!-- Formulaire modification catway -->
+                    <form id="updateCatwayForm">
+                        <h4>Modifier un catway</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ID du catway">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Nouvel état"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </form>
+
+                    <!-- Formulaire suppression catway -->
+                    <form id="deleteCatwayForm">
+                        <h4>Supprimer un catway</h4>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="ID du catway">
+                        </div>
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
